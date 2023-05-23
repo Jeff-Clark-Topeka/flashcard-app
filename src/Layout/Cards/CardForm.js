@@ -1,35 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-
-function StudyCard({ cards }) {
-    const [index, setIndex] = useState(0);
-
-    return (
-        <StudyCardEntry card={cards[index]} onNext={() => setIndex(index + 1)} />
-    );
-}
-
-function StudyCardEntry({ card, onNext}) {
-    const [showBack, setShowBack] = useState(false);
-
-    useEffect(() => {
-        setShowBack(false);
-    }, [card]);
-
-    return (
-        <div style={{ border: "1px solid black" }}>
-            <div>{card.front}</div>
-            {showBack ? (
-                <div>
-                    <div>{card.back}</div>
-                    <button onClick={() => onNext()}>Next</button>
-                </div>
-            ) : (
-                <button onClick={() => setShowBack(true)}>Flip</button>
-            )}
+function CardForm(props) {
+  return (
+    <div>
+      <form onSubmit={props.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="front" className="form-label">
+            Front Side
+          </label>
+          <textarea
+            type="textarea"
+            className="form-control"
+            id="front"
+            name="front"
+            placeholder={props.formData.front}
+            onChange={props.handleChange}
+            value={props.formData.front}
+          />
         </div>
-    );
+        <div className="form-group">
+          <label htmlFor="back" className="form-label">
+            Back Side
+          </label>
+          <textarea
+            type="textarea"
+            className="form-control"
+            id="back"
+            name="back"
+            placeholder={props.formData.back}
+            onChange={props.handleChange}
+            value={props.formData.back}
+          />
+        </div>
+        <input
+          className="btn btn-secondary mr-3"
+          type="reset"
+          onClick={props.handleReset}
+          value="Reset"
+        ></input>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </div>
+  );
 }
 
-
-export default StudyCard;
+export default CardForm;
